@@ -1,6 +1,17 @@
 package com.example.backendvillasystem.client.domain.model.commands;
 
-public record CreateClientCommand(String firstName, String lastName, String phone, String address, String country, String city, String dni, String email, String password, String role) {
+public record CreateClientCommand(
+        String firstName,
+        String lastName,
+        String phone,
+        String address,
+        String country,
+        String city,
+        String dni,
+        String email,
+        String password,
+        String role
+) {
     public CreateClientCommand {
         if (firstName == null || firstName.isBlank()) {
             throw new IllegalArgumentException("First name cannot be null or empty");
