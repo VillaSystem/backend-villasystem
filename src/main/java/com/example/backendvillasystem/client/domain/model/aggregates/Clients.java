@@ -1,5 +1,6 @@
 package com.example.backendvillasystem.client.domain.model.aggregates;
 
+import com.example.backendvillasystem.client.domain.model.commands.CreateClientCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -47,11 +48,22 @@ public class Clients extends AbstractAggregateRoot<Clients> {
     @Column(nullable = false)
     private String password;
 
-    @Transient
-    private String confirmPassword;
-
     @Column(nullable = false)
     private String role;
 
+
     protected Clients() {}
+
+    public Clients(CreateClientCommand command) {
+        this.firstName = command.firstName();
+        this.lastName = command.lastName();
+        this.phone = command.phone();
+        this.address = command.address();
+        this.country = command.country();
+        this.city = command.city();
+        this.dni = command.dni();
+        this.email = command.email();
+        this.password = command.password();
+        this.role = command.role();
+    }
 }
