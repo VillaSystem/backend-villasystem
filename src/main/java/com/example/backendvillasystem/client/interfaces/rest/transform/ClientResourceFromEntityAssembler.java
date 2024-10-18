@@ -1,6 +1,7 @@
-package com.example.backendvillasystem.client.interfaces.rest;
+package com.example.backendvillasystem.client.interfaces.rest.transform;
 
 import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client.interfaces.rest.resources.ClientResource;
 
 public class ClientResourceFromEntityAssembler {
     public static ClientResource toResourceFromEntity(Clients entity) {

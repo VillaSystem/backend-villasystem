@@ -1,6 +1,7 @@
-package com.example.backendvillasystem.client.interfaces.rest;
+package com.example.backendvillasystem.client.interfaces.rest.transform;
 
 import com.example.backendvillasystem.client.domain.model.commands.CreateClientCommand;
+import com.example.backendvillasystem.client.interfaces.rest.resources.CreateClientResource;
 
 public class CreateClientCommandFromResourceAssembler {
 
