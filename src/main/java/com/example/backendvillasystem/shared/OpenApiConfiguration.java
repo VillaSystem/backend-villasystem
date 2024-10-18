@@ -1,7 +1,9 @@
 package com.example.backendvillasystem.shared;
 
+
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,10 +11,13 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfiguration {
 
     @Bean
-    public OpenAPI usersMicroserviceOpenAPI() {
+    public OpenAPI villaSystemOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Villa System API")
-                        .description("Your Villa System API Description")
-                        .version("1.0"));
+                .info(new Info()
+                        .title("Villa System REST API Documentation")
+                        .description("This is the REST API documentation for the Villa System application using springdoc-openapi and OpenAPI 3.")
+                        .version("v1.0.0")
+                        .license(new License().name("Apache 2.0")
+                                .url("https://opensource.org")));
     }
 }
