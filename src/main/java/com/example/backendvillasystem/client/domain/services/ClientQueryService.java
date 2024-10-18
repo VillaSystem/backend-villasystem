@@ -3,6 +3,7 @@ package com.example.backendvillasystem.client.domain.services;
 import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
 import com.example.backendvillasystem.client.domain.model.queries.GetClientsByIdQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,4 +22,10 @@ public interface ClientQueryService {
      * @see GetClientsByIdQuery
      */
     Optional<Clients> handle(GetClientsByIdQuery query);
+
+    /**
+     * Retrieve all clients
+     * @return List of all clients
+     */
+    List<Clients> getAllClients();
 }
