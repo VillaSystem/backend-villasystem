@@ -4,6 +4,8 @@ import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventor
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * JPA Repository for the Inventories entity
  * @summary
@@ -15,4 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventories, Long> {
 
+    List<Inventories> findByProducerId(Long producerId);
 }

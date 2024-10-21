@@ -2,6 +2,7 @@ package com.example.backendvillasystem.inventory.interfaces.rest;
 
 import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
 import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByIdQuery;
+import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByProducerIdQuery;
 import com.example.backendvillasystem.inventory.domain.services.InventoryCommandService;
 import com.example.backendvillasystem.inventory.domain.services.InventoryQueryService;
 import com.example.backendvillasystem.inventory.interfaces.rest.resources.InventoryResource;
@@ -82,5 +83,23 @@ public class InventoryController {
             return getAllInventories();
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    /**
+     * Get inventories by producer ID.
+     *
+     * @param producerId The ID of the producer.
+     * @return List of inventories related to the producer.
+     */
+    @GetMapping("/by-producer/{producerId}")
+    public ResponseEntity<List<InventoryResource>> getInventoriesByProducerId(@PathVariable Long producerId) {
+        var inventories = inventoryQueryService.handle(new GetInventoriesByProducerIdQuery(producerId));
+        if (inventories.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var inventoryResources = inventories.stream()
+                .map(InventoryResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(inventoryResources);
     }
 }
