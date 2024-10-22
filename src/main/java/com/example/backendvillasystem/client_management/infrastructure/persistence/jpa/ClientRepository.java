@@ -1,9 +1,10 @@
-package com.example.backendvillasystem.client.infrastructure.persistence.jpa;
+package com.example.backendvillasystem.client_management.infrastructure.persistence.jpa;
 
-import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 /**
  * JPA Repository for the Clients entity
  * @summary
@@ -21,4 +22,6 @@ public interface ClientRepository extends JpaRepository<Clients, Long> {
      * @return True if a client with the given email or DNI exists, false otherwise
      */
     boolean existsByEmailOrDni(String email, String dni);
+
+    List<Clients> findByRole(String role);
 }
