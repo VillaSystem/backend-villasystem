@@ -1,8 +1,8 @@
-package com.example.backendvillasystem.client.domain.services;
+package com.example.backendvillasystem.client_management.domain.services;
 
 
-import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
-import com.example.backendvillasystem.client.domain.model.commands.CreateClientCommand;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.commands.CreateClientCommand;
 
 import java.util.Optional;
 
