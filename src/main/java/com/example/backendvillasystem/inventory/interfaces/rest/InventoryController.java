@@ -91,7 +91,7 @@ public class InventoryController {
      * @param producerId The ID of the producer.
      * @return List of inventories related to the producer.
      */
-    @GetMapping("/by-producer/{producerId}")
+    @GetMapping("{producerId}")
     public ResponseEntity<List<InventoryResource>> getInventoriesByProducerId(@PathVariable Long producerId) {
         var inventories = inventoryQueryService.handle(new GetInventoriesByProducerIdQuery(producerId));
         if (inventories.isEmpty()) {
