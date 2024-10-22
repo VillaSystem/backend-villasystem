@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.client.interfaces.rest.resources;
+package com.example.backendvillasystem.client_management.interfaces.rest.resources;
 
 public record CreateClientResource(
         String firstName,

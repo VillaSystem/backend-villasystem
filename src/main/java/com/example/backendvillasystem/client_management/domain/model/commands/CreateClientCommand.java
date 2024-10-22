@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.client.domain.model.commands;
+package com.example.backendvillasystem.client_management.domain.model.commands;
 
 public record CreateClientCommand(
         String firstName,

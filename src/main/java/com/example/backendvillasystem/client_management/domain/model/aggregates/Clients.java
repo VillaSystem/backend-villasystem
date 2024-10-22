@@ -1,6 +1,6 @@
-package com.example.backendvillasystem.client.domain.model.aggregates;
+package com.example.backendvillasystem.client_management.domain.model.aggregates;
 
-import com.example.backendvillasystem.client.domain.model.commands.CreateClientCommand;
+import com.example.backendvillasystem.client_management.domain.model.commands.CreateClientCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
