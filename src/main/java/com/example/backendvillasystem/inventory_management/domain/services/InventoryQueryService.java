@@ -1,8 +1,8 @@
-package com.example.backendvillasystem.inventory.domain.services;
+package com.example.backendvillasystem.inventory_management.domain.services;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByIdQuery;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByProducerIdQuery; // Asegúrate de tener este query
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByIdQuery;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByProducerIdQuery; // Asegúrate de tener este query
 
 import java.util.List;
 import java.util.Optional;

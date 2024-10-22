@@ -1,14 +1,14 @@
-package com.example.backendvillasystem.inventory.interfaces.rest;
+package com.example.backendvillasystem.inventory_management.interfaces.rest;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByIdQuery;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByProducerIdQuery;
-import com.example.backendvillasystem.inventory.domain.services.InventoryCommandService;
-import com.example.backendvillasystem.inventory.domain.services.InventoryQueryService;
-import com.example.backendvillasystem.inventory.interfaces.rest.resources.InventoryResource;
-import com.example.backendvillasystem.inventory.interfaces.rest.resources.CreateInventoryResource;
-import com.example.backendvillasystem.inventory.interfaces.rest.transform.InventoryResourceFromEntityAssembler;
-import com.example.backendvillasystem.inventory.interfaces.rest.transform.CreateInventoryCommandFromResourceAssembler;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByIdQuery;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByProducerIdQuery;
+import com.example.backendvillasystem.inventory_management.domain.services.InventoryCommandService;
+import com.example.backendvillasystem.inventory_management.domain.services.InventoryQueryService;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.InventoryResource;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.CreateInventoryResource;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.transform.InventoryResourceFromEntityAssembler;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.transform.CreateInventoryCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

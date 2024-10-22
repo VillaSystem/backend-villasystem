@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.inventory.interfaces.rest.resources;
+package com.example.backendvillasystem.inventory_management.interfaces.rest.resources;
 
 public record InventoryResource(
         Long id,

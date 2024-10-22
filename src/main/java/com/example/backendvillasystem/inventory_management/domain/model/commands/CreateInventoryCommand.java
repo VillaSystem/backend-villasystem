@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.inventory.domain.model.commands;
+package com.example.backendvillasystem.inventory_management.domain.model.commands;
 
 public record CreateInventoryCommand(
         String name, // renamed from 'nombre'

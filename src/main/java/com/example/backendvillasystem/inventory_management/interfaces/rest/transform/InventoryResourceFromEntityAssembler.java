@@ -1,7 +1,7 @@
-package com.example.backendvillasystem.inventory.interfaces.rest.transform;
+package com.example.backendvillasystem.inventory_management.interfaces.rest.transform;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.interfaces.rest.resources.InventoryResource;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.InventoryResource;
 
 public class InventoryResourceFromEntityAssembler {
     public static InventoryResource toResourceFromEntity(Inventories entity) {

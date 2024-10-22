@@ -1,9 +1,9 @@
-package com.example.backendvillasystem.inventory.applicaction.internal;
+package com.example.backendvillasystem.inventory_management.applicaction.internal;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.domain.model.commands.CreateInventoryCommand;
-import com.example.backendvillasystem.inventory.domain.services.InventoryCommandService;
-import com.example.backendvillasystem.inventory.infrastructure.presistence.jpa.InventoryRepository;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.CreateInventoryCommand;
+import com.example.backendvillasystem.inventory_management.domain.services.InventoryCommandService;
+import com.example.backendvillasystem.inventory_management.infrastructure.presistence.jpa.InventoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

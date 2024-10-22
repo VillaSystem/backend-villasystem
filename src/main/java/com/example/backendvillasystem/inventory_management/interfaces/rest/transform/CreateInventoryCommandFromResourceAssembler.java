@@ -1,7 +1,7 @@
-package com.example.backendvillasystem.inventory.interfaces.rest.transform;
+package com.example.backendvillasystem.inventory_management.interfaces.rest.transform;
 
-import com.example.backendvillasystem.inventory.domain.model.commands.CreateInventoryCommand;
-import com.example.backendvillasystem.inventory.interfaces.rest.resources.CreateInventoryResource;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.CreateInventoryCommand;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.CreateInventoryResource;
 
 public class CreateInventoryCommandFromResourceAssembler {
 

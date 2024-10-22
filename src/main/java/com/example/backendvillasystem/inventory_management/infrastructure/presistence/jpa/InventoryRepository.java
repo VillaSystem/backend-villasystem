@@ -1,6 +1,6 @@
-package com.example.backendvillasystem.inventory.infrastructure.presistence.jpa;
+package com.example.backendvillasystem.inventory_management.infrastructure.presistence.jpa;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

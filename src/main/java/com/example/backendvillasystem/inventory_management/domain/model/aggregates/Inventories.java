@@ -1,6 +1,6 @@
-package com.example.backendvillasystem.inventory.domain.model.aggregates;
+package com.example.backendvillasystem.inventory_management.domain.model.aggregates;
 
-import com.example.backendvillasystem.inventory.domain.model.commands.CreateInventoryCommand;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.CreateInventoryCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;

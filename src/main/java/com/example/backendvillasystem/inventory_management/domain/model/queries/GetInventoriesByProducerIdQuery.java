@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.inventory.domain.model.queries;
+package com.example.backendvillasystem.inventory_management.domain.model.queries;
 
 public record GetInventoriesByProducerIdQuery(Long producerId) {
     public GetInventoriesByProducerIdQuery {

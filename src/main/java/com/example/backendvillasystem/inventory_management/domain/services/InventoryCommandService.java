@@ -1,7 +1,7 @@
-package com.example.backendvillasystem.inventory.domain.services;
+package com.example.backendvillasystem.inventory_management.domain.services;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.domain.model.commands.CreateInventoryCommand;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.CreateInventoryCommand;
 
 import java.util.Optional;
 

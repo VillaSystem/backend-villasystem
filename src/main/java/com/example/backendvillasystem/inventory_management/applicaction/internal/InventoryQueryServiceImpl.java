@@ -1,10 +1,10 @@
-package com.example.backendvillasystem.inventory.applicaction.internal;
+package com.example.backendvillasystem.inventory_management.applicaction.internal;
 
-import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByIdQuery;
-import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByProducerIdQuery; // Importar el query
-import com.example.backendvillasystem.inventory.domain.services.InventoryQueryService;
-import com.example.backendvillasystem.inventory.infrastructure.presistence.jpa.InventoryRepository;
+import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByIdQuery;
+import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByProducerIdQuery; // Importar el query
+import com.example.backendvillasystem.inventory_management.domain.services.InventoryQueryService;
+import com.example.backendvillasystem.inventory_management.infrastructure.presistence.jpa.InventoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
