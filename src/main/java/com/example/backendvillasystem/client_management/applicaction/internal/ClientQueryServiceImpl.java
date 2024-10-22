@@ -1,9 +1,10 @@
-package com.example.backendvillasystem.client.applicaction.internal;
+package com.example.backendvillasystem.client_management.applicaction.internal;
 
-import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
-import com.example.backendvillasystem.client.domain.model.queries.GetClientsByIdQuery;
-import com.example.backendvillasystem.client.domain.services.ClientQueryService;
-import com.example.backendvillasystem.client.infrastructure.persistence.jpa.ClientRepository;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByIdQuery;
+import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByRoleQuery;
+import com.example.backendvillasystem.client_management.domain.services.ClientQueryService;
+import com.example.backendvillasystem.client_management.infrastructure.persistence.jpa.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +39,16 @@ public class ClientQueryServiceImpl implements ClientQueryService {
     @Override
     public List<Clients> getAllClients() {
         return clientRepository.findAll();
+    }
+
+    /**
+     * Handles the GetClientsByRoleQuery query.
+     * @param query The get clients by role query.
+     * @return List of clients with the given role.
+     * @see GetClientsByRoleQuery
+     */
+    @Override
+    public List<Clients> handle(GetClientsByRoleQuery query) {
+        return clientRepository.findByRole(query.role());
     }
 }
