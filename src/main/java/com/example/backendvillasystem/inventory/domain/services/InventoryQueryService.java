@@ -2,6 +2,7 @@ package com.example.backendvillasystem.inventory.domain.services;
 
 import com.example.backendvillasystem.inventory.domain.model.aggregates.Inventories;
 import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByIdQuery;
+import com.example.backendvillasystem.inventory.domain.model.queries.GetInventoriesByProducerIdQuery; // Asegúrate de tener este query
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +29,13 @@ public interface InventoryQueryService {
      * @return List of all inventory items
      */
     List<Inventories> getAllInventories();
+
+    /**
+     * Handle the get inventories by producer id query
+     * @param query The get inventories by producer id query
+     * @return List of inventories for the given producer
+     *
+     * @see GetInventoriesByProducerIdQuery
+     */
+    List<Inventories> handle(GetInventoriesByProducerIdQuery query);
 }
