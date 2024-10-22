@@ -1,9 +1,9 @@
-package com.example.backendvillasystem.client.applicaction.internal;
+package com.example.backendvillasystem.client_management.applicaction.internal;
 
-import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
-import com.example.backendvillasystem.client.domain.model.commands.CreateClientCommand;
-import com.example.backendvillasystem.client.domain.services.ClientCommandService;
-import com.example.backendvillasystem.client.infrastructure.persistence.jpa.ClientRepository;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.commands.CreateClientCommand;
+import com.example.backendvillasystem.client_management.domain.services.ClientCommandService;
+import com.example.backendvillasystem.client_management.infrastructure.persistence.jpa.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

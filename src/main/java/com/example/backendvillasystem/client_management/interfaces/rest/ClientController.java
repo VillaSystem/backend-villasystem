@@ -1,13 +1,14 @@
-package com.example.backendvillasystem.client.interfaces.rest;
+package com.example.backendvillasystem.client_management.interfaces.rest;
 
-import com.example.backendvillasystem.client.domain.model.aggregates.Clients;
-import com.example.backendvillasystem.client.domain.model.queries.GetClientsByIdQuery;
-import com.example.backendvillasystem.client.domain.services.ClientCommandService;
-import com.example.backendvillasystem.client.domain.services.ClientQueryService;
-import com.example.backendvillasystem.client.interfaces.rest.resources.ClientResource;
-import com.example.backendvillasystem.client.interfaces.rest.resources.CreateClientResource;
-import com.example.backendvillasystem.client.interfaces.rest.transform.ClientResourceFromEntityAssembler;
-import com.example.backendvillasystem.client.interfaces.rest.transform.CreateClientCommandFromResourceAssembler;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByIdQuery;
+import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByRoleQuery;
+import com.example.backendvillasystem.client_management.domain.services.ClientCommandService;
+import com.example.backendvillasystem.client_management.domain.services.ClientQueryService;
+import com.example.backendvillasystem.client_management.interfaces.rest.resources.ClientResource;
+import com.example.backendvillasystem.client_management.interfaces.rest.resources.CreateClientResource;
+import com.example.backendvillasystem.client_management.interfaces.rest.transform.ClientResourceFromEntityAssembler;
+import com.example.backendvillasystem.client_management.interfaces.rest.transform.CreateClientCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -83,4 +84,17 @@ public class ClientController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @GetMapping("{role}")
+    public ResponseEntity<List<ClientResource>> getClientsByRole(@PathVariable String role){
+        var clients = clientQueryService.handle(new GetClientsByRoleQuery(role));
+        if (clients.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var clientResources = clients.stream()
+                .map(ClientResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(clientResources);
+    }
+
 }
