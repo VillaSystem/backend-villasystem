@@ -34,9 +34,10 @@ public class InventoryController {
 
     /**
      * Constructor
-     * @param inventoryQueryService InventoryQueryService
-     * @param inventoryCommandService InventoryCommandService
+     * @param inventoryQueryService ClientQueryService
+     * @param inventoryCommandService ClientCommandService
      */
+
     public InventoryController(InventoryQueryService inventoryQueryService, InventoryCommandService inventoryCommandService) {
         this.inventoryQueryService = inventoryQueryService;
         this.inventoryCommandService = inventoryCommandService;
@@ -69,6 +70,10 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryResources);
     }
 
+    @Operation(
+            summary = "Get inventory item by ID",
+            description = "Retrieve a specific inventory item by its unique ID"
+    )
     @GetMapping("{id}")
     public ResponseEntity<InventoryResource> getInventoryById(@PathVariable Long id) {
         Optional<Inventories> inventoryItem = inventoryQueryService.handle(new GetInventoriesByIdQuery(id));
@@ -76,22 +81,18 @@ public class InventoryController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Get inventories by producer ID or all inventories",
+            description = "Retrieve inventory items either by producer ID or return all if no filter is provided"
+    )
     @GetMapping
-    public ResponseEntity<?> getInventoriesWithParameters(@Parameter(name= "params", hidden = true)
+    public ResponseEntity<?> getInventoriesWithParameters(@Parameter(name = "params", hidden = true)
                                                           @RequestParam Map<String, String> params) {
-        if (params.isEmpty()) {
-            return getAllInventories();
+        if (params.containsKey("producerId")) {
+            return getInventoriesByProducerId(Long.parseLong(params.get("producerId")));
         }
-        return ResponseEntity.badRequest().build();
+        return getAllInventories();
     }
-
-    /**
-     * Get inventories by producer ID.
-     *
-     * @param producerId The ID of the producer.
-     * @return List of inventories related to the producer.
-     */
-    @GetMapping("{producerId}")
     public ResponseEntity<List<InventoryResource>> getInventoriesByProducerId(@PathVariable Long producerId) {
         var inventories = inventoryQueryService.handle(new GetInventoriesByProducerIdQuery(producerId));
         if (inventories.isEmpty()) {
