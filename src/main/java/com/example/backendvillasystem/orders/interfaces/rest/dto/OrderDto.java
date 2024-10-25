@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.orders.dto;
+package com.example.backendvillasystem.orders.interfaces.rest.dto;
 
 import lombok.Data;
 import java.time.LocalDate;
@@ -18,9 +18,10 @@ public class OrderDto {
     private String tipo;
     private String estado;
 
-    // Solo los IDs del producto y consumidor
+    // Solo los IDs del producto,productor y consumidor
     private Long productId;
     private Long consumerId;
+    private Long producerId;
 
-    // Constructor, getters y setters si es necesario (aunque @Data de Lombok los genera automáticamente)
+
 }
