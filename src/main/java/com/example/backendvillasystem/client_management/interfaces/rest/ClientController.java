@@ -24,6 +24,8 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+
+
 @RestController
 @RequestMapping(value = "/api/v1/clients", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Clients", description = "Operations related to clients")
@@ -69,6 +71,17 @@ public class ClientController {
         return ResponseEntity.ok(clientResources);
     }
 
+    private ResponseEntity<List<ClientResource>> getClientsByRole(String role) {
+        var clients = clientQueryService.handle(new GetClientsByRoleQuery(role));
+        if (clients.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var clientResources = clients.stream()
+                .map(ClientResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(clientResources);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<ClientResource> getClientById(@PathVariable Long id) {
         Optional<Clients> client = clientQueryService.handle(new GetClientsByIdQuery(id));
@@ -79,22 +92,11 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<?> getClientsWithParameters(@Parameter(name= "params", hidden = true)
                                                       @RequestParam Map<String, String> params) {
-        if (params.isEmpty()) {
+        if (params.containsKey("role")){
+            return getClientsByRole(params.get("role"));
+        } else {
             return getAllClients();
         }
-        return ResponseEntity.badRequest().build();
-    }
-
-    @GetMapping("{role}")
-    public ResponseEntity<List<ClientResource>> getClientsByRole(@PathVariable String role){
-        var clients = clientQueryService.handle(new GetClientsByRoleQuery(role));
-        if (clients.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var clientResources = clients.stream()
-                .map(ClientResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(clientResources);
     }
 
 }
