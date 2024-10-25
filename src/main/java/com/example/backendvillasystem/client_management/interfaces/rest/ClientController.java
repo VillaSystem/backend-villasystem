@@ -82,6 +82,10 @@ public class ClientController {
         return ResponseEntity.ok(clientResources);
     }
 
+    @Operation(
+            summary = "Get a client by ID",
+            description = "Get a client by the provided ID"
+    )
     @GetMapping("{id}")
     public ResponseEntity<ClientResource> getClientById(@PathVariable Long id) {
         Optional<Clients> client = clientQueryService.handle(new GetClientsByIdQuery(id));
@@ -89,6 +93,10 @@ public class ClientController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Get clients by role or all clients",
+            description = "Get clients with the provided parameters"
+    )
     @GetMapping
     public ResponseEntity<?> getClientsWithParameters(@Parameter(name= "params", hidden = true)
                                                       @RequestParam Map<String, String> params) {
