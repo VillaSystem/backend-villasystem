@@ -31,9 +31,8 @@ public class Order extends AbstractAggregateRoot<Order> {
     private String status;
 
     @Column(nullable = false)
-    private Long numeroPedido;  // Campo para el número de pedido
+    private Long numeroPedido;
 
-    // Relacionar con la entidad Clients
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consumer_id", nullable = false)
     private Clients consumer;
@@ -43,9 +42,9 @@ public class Order extends AbstractAggregateRoot<Order> {
     private Clients producer;
 
     @Column(nullable = false)
-    private String orderDate; // Fecha de la orden
+    private String orderDate;
 
-    // Nuevos campos que necesitas
+    // Additional fields
     private String condicionTransporte;
     private String metodoPago;
     private String telefono;
@@ -61,8 +60,8 @@ public class Order extends AbstractAggregateRoot<Order> {
         this.productId = command.getProductId();
         this.quantity = command.getQuantity();
         this.price = command.getPrice();
-        this.status = "pendiente";  // Estado inicial
-        this.numeroPedido = command.getNumeroPedido();  // Inicializa numeroPedido
+        this.status = "pendiente";  // Initial status
+        this.numeroPedido = command.getNumeroPedido();
         this.consumer = consumer;
         this.producer = producer;
         this.orderDate = command.getOrderDate();
@@ -78,39 +77,6 @@ public class Order extends AbstractAggregateRoot<Order> {
 
     public void updateStatus(String newStatus) {
         this.status = newStatus;
-    }
-
-    // Getters para los nuevos campos
-    public String getCondicionTransporte() {
-        return condicionTransporte;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getTelefonoProductor() {
-        return telefonoProductor;
-    }
-
-    public String getTerminosPago() {
-        return terminosPago;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public LocalDate getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public String getTipo() {
-        return tipo;
     }
 
     public String getEstado() {

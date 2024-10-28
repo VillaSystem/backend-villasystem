@@ -14,6 +14,8 @@ public class CreateOrderCommandFromResourceAssembler {
                 resource.getPrice(),
                 resource.getNumeroPedido(),
                 resource.getFecha().toString(),
+                resource.getClientId(),
+                resource.getProducerId(),
                 resource.getCondicionTransporte(),
                 resource.getMetodoPago(),
                 resource.getTelefono(),

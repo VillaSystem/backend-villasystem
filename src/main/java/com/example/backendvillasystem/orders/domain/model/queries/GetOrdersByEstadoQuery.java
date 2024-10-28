@@ -7,7 +7,6 @@ public class GetOrdersByEstadoQuery {
         this.estado = estado;
     }
 
-    // Getter y setter
     public String getEstado() {
         return estado;
     }

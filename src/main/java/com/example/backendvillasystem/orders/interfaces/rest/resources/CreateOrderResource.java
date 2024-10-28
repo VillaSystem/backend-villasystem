@@ -3,9 +3,10 @@ package com.example.backendvillasystem.orders.interfaces.rest.resources;
 import java.time.LocalDate;
 
 public class CreateOrderResource {
-    private String numeroPedido;
+    private Long numeroPedido;
     private Long productId;
     private Long clientId;
+    private Long producerId;
     private String condicionTransporte;
     private String metodoPago;
     private String telefono;
@@ -37,11 +38,11 @@ public class CreateOrderResource {
         this.price = price;
     }
 
-    public String getNumeroPedido() {
+    public Long getNumeroPedido() {
         return numeroPedido;
     }
 
-    public void setNumeroPedido(String numeroPedido) {
+    public void setNumeroPedido(Long numeroPedido) {
         this.numeroPedido = numeroPedido;
     }
 
@@ -59,6 +60,14 @@ public class CreateOrderResource {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public Long getProducerId() {
+        return producerId;
+    }
+
+    public void setProducerId(Long producerId) {
+        this.producerId = producerId;
     }
 
     public String getCondicionTransporte() {

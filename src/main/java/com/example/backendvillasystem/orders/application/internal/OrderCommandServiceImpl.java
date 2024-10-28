@@ -23,13 +23,14 @@ public class OrderCommandServiceImpl implements OrderCommandService {
     @Override
     public Order createOrder(CreateOrderCommand command) {
         Clients consumer = clientRepository.findById(command.getConsumerId())
-                .orElseThrow(() -> new RuntimeException("Consumer not found"));
+                .orElseThrow(() -> new RuntimeException("Consumer not found!"));
         Clients producer = clientRepository.findById(command.getProducerId())
-                .orElseThrow(() -> new RuntimeException("Producer not found"));
+                .orElseThrow(() -> new RuntimeException("Producer not found!"));
 
         Order order = new Order(command, consumer, producer);
         return orderRepository.save(order);
     }
+
 
     // Método para actualizar el estado de una orden (falta implementar)
     @Override

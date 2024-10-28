@@ -23,5 +23,4 @@ public class Product {
         this.id = id;
     }
 
-    // Otros getters y setters para los campos relevantes
 }
