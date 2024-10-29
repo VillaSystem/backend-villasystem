@@ -3,6 +3,7 @@ package com.example.backendvillasystem.batch_management.interfaces.rest;
 
 import com.example.backendvillasystem.batch_management.domain.model.aggregates.Batch;
 import com.example.backendvillasystem.batch_management.domain.model.queries.GetBatchesByIdQuery;
+import com.example.backendvillasystem.batch_management.domain.model.queries.GetBatchesByProducerIdQuery;
 import com.example.backendvillasystem.batch_management.domain.services.BatchCommandService;
 import com.example.backendvillasystem.batch_management.domain.services.BatchQueryService;
 import com.example.backendvillasystem.batch_management.interfaces.rest.resources.BatchResource;
@@ -65,6 +66,12 @@ public class BatchController {
                 .toList();
         return ResponseEntity.ok(batchResources);
     }
+
+    @Operation(
+            summary = "Get batch item by ID",
+            description = "Retrieve a specific batch item by its unique ID"
+    )
+
     @GetMapping("{id}")
     public ResponseEntity<BatchResource> getBatchById(@PathVariable Long id) {
         Optional<Batch> batchItem = batchQueryService.handle(new GetBatchesByIdQuery(id));
@@ -73,13 +80,26 @@ public class BatchController {
 
     }
 
+    @Operation(
+            summary = "Get batches by producer ID or all batches",
+            description = "Retrieve batch items either bby producer ID or return all if no filter is provided"
+    )
     @GetMapping
     public ResponseEntity<?> getAllBatchWithParameters(@Parameter(name= "params", hidden = true)
                                                        @RequestParam Map<String, String> params) {
-        if (params.isEmpty()) {
-            return getAllBatches();
+        if (params.containsKey("producerId")) {
+            return getBatchByProducerId(Long.parseLong(params.get("producerId")));
         }
-        return ResponseEntity.badRequest().build();
-
+        return getAllBatches();
+    }
+    public ResponseEntity<List<BatchResource>> getBatchByProducerId(@PathVariable Long producerId) {
+        var batches = batchQueryService.handle(new GetBatchesByProducerIdQuery(producerId));
+        if (batches.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var batchResources = batches.stream()
+                .map(BatchResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(batchResources);
     }
 }
