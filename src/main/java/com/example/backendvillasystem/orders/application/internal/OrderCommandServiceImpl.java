@@ -31,8 +31,6 @@ public class OrderCommandServiceImpl implements OrderCommandService {
         return orderRepository.save(order);
     }
 
-
-    // Método para actualizar el estado de una orden (falta implementar)
     @Override
     public Order updateOrderStatus(UpdateOrderCommand command) {
         Order order = orderRepository.findById(command.getOrderId())

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@Table(name = "`order`")
 public class Order extends AbstractAggregateRoot<Order> {
 
     @Id
