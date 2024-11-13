@@ -15,7 +15,6 @@ public class CreateClientCommandFromResourceAssembler {
                 resource.city(),
                 resource.dni(),
                 resource.email(),
-                resource.password(),
                 resource.role()
         );
     }

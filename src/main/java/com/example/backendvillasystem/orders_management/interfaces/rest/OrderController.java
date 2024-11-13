@@ -56,6 +56,10 @@ public class OrderController {
     }
 
     // Endpoint para obtener todas las órdenes
+    @Operation(
+            summary = "Get all orders",
+            description = "Get all orders in the system"
+    )
     @GetMapping
     public ResponseEntity<List<OrderDto>> getAllOrders() {
         List<Order> orders = orderQueryService.getAllOrders();
@@ -70,6 +74,10 @@ public class OrderController {
     }
 
     // Endpoint para obtener una orden por ID
+    @Operation(
+            summary = "Get order by ID",
+            description = "Get an order by its ID"
+    )
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long orderId) {
         GetOrderByIdQuery query = new GetOrderByIdQuery(orderId);
@@ -81,6 +89,10 @@ public class OrderController {
     }
 
     // Endpoint para listar órdenes por estado
+    @Operation(
+            summary = "Get orders by status",
+            description = "Get all orders with the specified status"
+    )
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<OrderDto>> getOrdersByEstado(@PathVariable String estado) {
         GetOrdersByEstadoQuery query = new GetOrdersByEstadoQuery(estado);
@@ -97,6 +109,10 @@ public class OrderController {
     }
 
     // Endpoint para actualizar el estado de una orden
+    @Operation(
+            summary = "Update order status",
+            description = "Update the status of an order"
+    )
     @PatchMapping("/{orderId}")
     public ResponseEntity<OrderDto> updateOrderStatus(@PathVariable Long orderId, @RequestBody UpdateOrderCommand command) {
         command = new UpdateOrderCommand(orderId, command.getNewStatus());
@@ -108,6 +124,10 @@ public class OrderController {
     }
 
     // Endpoint para eliminar una orden
+    @Operation(
+            summary = "Delete order",
+            description = "Delete an order by its ID"
+    )
     @DeleteMapping("/{orderId}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderCommandService.deleteOrder(orderId);

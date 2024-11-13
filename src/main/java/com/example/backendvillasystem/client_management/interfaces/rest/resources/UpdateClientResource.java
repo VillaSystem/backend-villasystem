@@ -1,17 +1,7 @@
 package com.example.backendvillasystem.client_management.interfaces.rest.resources;
 
-public record CreateClientResource(
-        String firstName,
-        String lastName,
-        String phone,
-        String address,
-        String country,
-        String city,
-        String dni,
-        String email,
-        String role
-) {
-    public CreateClientResource {
+public record UpdateClientResource(String firstName, String lastName, String phone, String address, String country, String city, String dni, String email, String role) {
+    public UpdateClientResource {
         if (firstName == null || firstName.isBlank()) {
             throw new IllegalArgumentException("First name cannot be null or empty");
         }

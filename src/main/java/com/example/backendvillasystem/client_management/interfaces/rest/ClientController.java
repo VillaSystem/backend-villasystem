@@ -1,14 +1,17 @@
 package com.example.backendvillasystem.client_management.interfaces.rest;
 
 import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.commands.DeleteClientCommand;
 import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByIdQuery;
 import com.example.backendvillasystem.client_management.domain.model.queries.GetClientsByRoleQuery;
 import com.example.backendvillasystem.client_management.domain.services.ClientCommandService;
 import com.example.backendvillasystem.client_management.domain.services.ClientQueryService;
 import com.example.backendvillasystem.client_management.interfaces.rest.resources.ClientResource;
 import com.example.backendvillasystem.client_management.interfaces.rest.resources.CreateClientResource;
+import com.example.backendvillasystem.client_management.interfaces.rest.resources.UpdateClientResource;
 import com.example.backendvillasystem.client_management.interfaces.rest.transform.ClientResourceFromEntityAssembler;
 import com.example.backendvillasystem.client_management.interfaces.rest.transform.CreateClientCommandFromResourceAssembler;
+import com.example.backendvillasystem.client_management.interfaces.rest.transform.UpdateClientCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -105,6 +108,34 @@ public class ClientController {
         } else {
             return getAllClients();
         }
+    }
+
+    @PutMapping("/{clientId}")
+    @Operation(summary = "Update a client", description = "Update a client")
+    @ApiResponses( value =  {
+            @ApiResponse(responseCode = "200", description = "Client updated"),
+            @ApiResponse(responseCode = "404", description = "Client not found")
+    })
+    public ResponseEntity<ClientResource> updateClient(@PathVariable Long clientId,
+                                                       @RequestBody UpdateClientResource resource) {
+        var updateClientCommand = UpdateClientCommandFromResourceAssembler.toCommandFromResource(clientId, resource);
+        var updatedClient = clientCommandService.handle(updateClientCommand);
+        if (updatedClient.isEmpty()) return  ResponseEntity.notFound().build();
+        var updatedClientEntity = updatedClient.get();
+        var updatedClientResource = ClientResourceFromEntityAssembler.toResourceFromEntity(updatedClientEntity);
+        return ResponseEntity.ok(updatedClientResource);
+    }
+
+    @DeleteMapping("/{clientId}")
+    @Operation(summary = "Delete a client", description = "Delete a client")
+    @ApiResponses( value =  {
+            @ApiResponse(responseCode = "200", description = "Client deleted"),
+            @ApiResponse(responseCode = "404", description = "Client not found")
+    })
+    public ResponseEntity<?> deleteClient(@PathVariable Long clientId) {
+        var deleteClientCommand = new DeleteClientCommand(clientId);
+        clientCommandService.handle(deleteClientCommand);
+        return ResponseEntity.ok("Client deleted");
     }
 
 }

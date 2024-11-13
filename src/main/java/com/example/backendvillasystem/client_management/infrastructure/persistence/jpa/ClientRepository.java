@@ -24,4 +24,6 @@ public interface ClientRepository extends JpaRepository<Clients, Long> {
     boolean existsByEmailOrDni(String email, String dni);
 
     List<Clients> findByRole(String role);
+
+    boolean existsByDniAndIdIsNot( String dni, Long id);
 }
