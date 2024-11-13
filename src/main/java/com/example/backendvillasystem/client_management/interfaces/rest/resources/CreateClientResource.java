@@ -9,7 +9,6 @@ public record CreateClientResource(
         String city,
         String dni,
         String email,
-        String password,
         String role
 ) {
     public CreateClientResource {
@@ -36,9 +35,6 @@ public record CreateClientResource(
         }
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
-        }
-        if (password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Password cannot be null or empty");
         }
         if (role == null || role.isBlank()) {
             throw new IllegalArgumentException("Role cannot be null or empty");
