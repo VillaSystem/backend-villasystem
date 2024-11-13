@@ -45,8 +45,6 @@ public class Clients extends AbstractAggregateRoot<Clients> {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
 
     @Column(nullable = false)
     private String role;
@@ -63,7 +61,19 @@ public class Clients extends AbstractAggregateRoot<Clients> {
         this.city = command.city();
         this.dni = command.dni();
         this.email = command.email();
-        this.password = command.password();
         this.role = command.role();
+    }
+
+    public Clients updateClient(String firstName, String lastName, String phone, String address, String country, String city, String dni, String email, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.country = country;
+        this.city = city;
+        this.dni = dni;
+        this.email = email;
+        this.role = role;
+        return this;
     }
 }
