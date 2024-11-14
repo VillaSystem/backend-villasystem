@@ -1,14 +1,18 @@
 package com.example.backendvillasystem.inventory_management.interfaces.rest;
 
 import com.example.backendvillasystem.inventory_management.domain.model.aggregates.Inventories;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.DeleteInventoryCommand;
+import com.example.backendvillasystem.inventory_management.domain.model.commands.UpdateInventoryCommand;
 import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByIdQuery;
 import com.example.backendvillasystem.inventory_management.domain.model.queries.GetInventoriesByProducerIdQuery;
 import com.example.backendvillasystem.inventory_management.domain.services.InventoryCommandService;
 import com.example.backendvillasystem.inventory_management.domain.services.InventoryQueryService;
 import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.InventoryResource;
 import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.CreateInventoryResource;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.resources.UpdateInventoryResource;
 import com.example.backendvillasystem.inventory_management.interfaces.rest.transform.InventoryResourceFromEntityAssembler;
 import com.example.backendvillasystem.inventory_management.interfaces.rest.transform.CreateInventoryCommandFromResourceAssembler;
+import com.example.backendvillasystem.inventory_management.interfaces.rest.transform.UpdateInventoryCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,12 +35,6 @@ public class InventoryController {
 
     private final InventoryQueryService inventoryQueryService;
     private final InventoryCommandService inventoryCommandService;
-
-    /**
-     * Constructor
-     * @param inventoryQueryService ClientQueryService
-     * @param inventoryCommandService ClientCommandService
-     */
 
     public InventoryController(InventoryQueryService inventoryQueryService, InventoryCommandService inventoryCommandService) {
         this.inventoryQueryService = inventoryQueryService;
@@ -93,6 +91,7 @@ public class InventoryController {
         }
         return getAllInventories();
     }
+
     public ResponseEntity<List<InventoryResource>> getInventoriesByProducerId(@PathVariable Long producerId) {
         var inventories = inventoryQueryService.handle(new GetInventoriesByProducerIdQuery(producerId));
         if (inventories.isEmpty()) {
@@ -102,5 +101,33 @@ public class InventoryController {
                 .map(InventoryResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(inventoryResources);
+    }
+
+    @PutMapping("/{inventoryId}")
+    @Operation(summary = "Update an inventory item", description = "Update an inventory item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Inventory item updated"),
+            @ApiResponse(responseCode = "404", description = "Inventory item not found")
+    })
+    public ResponseEntity<InventoryResource> updateInventory(@PathVariable Long inventoryId,
+                                                             @RequestBody UpdateInventoryResource resource) {
+        var updateInventoryCommand = UpdateInventoryCommandFromResourceAssembler.toCommandFromResource(inventoryId, resource);
+        var updatedInventory = inventoryCommandService.handle(updateInventoryCommand);
+        if (updatedInventory.isEmpty()) return ResponseEntity.notFound().build();
+        var updatedInventoryEntity = updatedInventory.get();
+        var updatedInventoryResource = InventoryResourceFromEntityAssembler.toResourceFromEntity(updatedInventoryEntity);
+        return ResponseEntity.ok(updatedInventoryResource);
+    }
+
+    @DeleteMapping("/{inventoryId}")
+    @Operation(summary = "Delete an inventory item", description = "Delete an inventory item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Inventory item deleted"),
+            @ApiResponse(responseCode = "404", description = "Inventory item not found")
+    })
+    public ResponseEntity<?> deleteInventory(@PathVariable Long inventoryId) {
+        var deleteInventoryCommand = new DeleteInventoryCommand(inventoryId);
+        inventoryCommandService.handle(deleteInventoryCommand);
+        return ResponseEntity.ok("Inventory item deleted");
     }
 }
