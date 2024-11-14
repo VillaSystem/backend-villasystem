@@ -22,7 +22,7 @@ public class BackendVillasystemApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://backend-villasystem-production-36d5.up.railway.app")
+                        .allowedOrigins("https://grapeflow.netlify.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
