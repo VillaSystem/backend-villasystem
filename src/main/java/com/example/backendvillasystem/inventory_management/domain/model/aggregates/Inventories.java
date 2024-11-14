@@ -61,4 +61,20 @@ public class Inventories extends AbstractAggregateRoot<Inventories> {
         this.lastUpdated = command.lastUpdated();
         this.producerId = command.producerId(); // assign producer ID
     }
+
+    public Inventories updateInventory(String name, String type, String unit, String expirationDate,
+                                       String supplier, Double unitCost, int quantity,
+                                       String lastUpdated, Long producerId) {
+        this.name = name;
+        this.type = type;
+        this.unit = unit;
+        this.expirationDate = expirationDate;
+        this.supplier = supplier;
+        this.unitCost = unitCost;
+        this.quantity = quantity;
+        this.lastUpdated = lastUpdated;
+        this.producerId = producerId;
+        return this;
+    }
+
 }
