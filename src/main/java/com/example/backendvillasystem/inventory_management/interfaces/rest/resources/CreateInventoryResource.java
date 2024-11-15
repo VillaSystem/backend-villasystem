@@ -7,9 +7,7 @@ public record CreateInventoryResource(
         String expirationDate,
         String supplier,
         Double unitCost,
-        int quantity,
-        String lastUpdated,
-        Long producerId
+        int quantity
 ) {
     public CreateInventoryResource {
         if (name == null || name.isBlank()) {
@@ -32,12 +30,6 @@ public record CreateInventoryResource(
         }
         if (expirationDate == null || expirationDate.isBlank()) {
             throw new IllegalArgumentException("Expiration date cannot be null or empty");
-        }
-        if (lastUpdated == null || lastUpdated.isBlank()) {
-            throw new IllegalArgumentException("Last updated cannot be null or empty");
-        }
-        if (producerId == null) {
-            throw new IllegalArgumentException("Producer ID cannot be null");
         }
     }
 }

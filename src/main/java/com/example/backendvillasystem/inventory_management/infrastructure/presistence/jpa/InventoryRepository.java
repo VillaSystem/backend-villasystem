@@ -17,5 +17,4 @@ import java.util.List;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventories, Long> {
 
-    List<Inventories> findByProducerId(Long producerId);
 }

@@ -1,7 +1,7 @@
 package com.example.backendvillasystem.inventory_management.domain.model.commands;
 
 public record UpdateInventoryCommand(Long inventoryId, String name, String type, String unit, String expirationDate,
-                                     String supplier, Double unitCost, int quantity, String lastUpdated, Long producerId) {
+                                     String supplier, Double unitCost, int quantity) {
 
     public UpdateInventoryCommand {
         if (inventoryId == null || inventoryId <= 0) {
@@ -24,9 +24,6 @@ public record UpdateInventoryCommand(Long inventoryId, String name, String type,
         }
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        if (producerId == null || producerId <= 0) {
-            throw new IllegalArgumentException("Producer ID cannot be null or less than 1");
         }
     }
 }

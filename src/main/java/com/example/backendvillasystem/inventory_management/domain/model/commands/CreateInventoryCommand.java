@@ -7,9 +7,7 @@ public record CreateInventoryCommand(
         String expirationDate, // renamed from 'caducidad'
         String supplier, // renamed from 'proveedor'
         Double unitCost, // renamed from 'costoU'
-        int quantity, // renamed from 'cantidad'
-        String lastUpdated, // renamed from 'ultimaActualizacion'
-        Long producerId // new field for producer ID
+        int quantity // renamed from 'cantidad'
 ) {
     public CreateInventoryCommand {
         if (name == null || name.isBlank()) {
@@ -29,9 +27,6 @@ public record CreateInventoryCommand(
         }
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        if (producerId == null) {
-            throw new IllegalArgumentException("Producer ID cannot be null");
         }
     }
 }

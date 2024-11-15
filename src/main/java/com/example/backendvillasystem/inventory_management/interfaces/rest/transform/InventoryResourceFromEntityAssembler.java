@@ -13,9 +13,7 @@ public class InventoryResourceFromEntityAssembler {
                 entity.getExpirationDate(),
                 entity.getSupplier(),
                 entity.getUnitCost(),
-                entity.getQuantity(),
-                entity.getLastUpdated(),
-                entity.getProducerId() // New field for producer ID
+                entity.getQuantity() // New field for producer ID
         );
     }
 }

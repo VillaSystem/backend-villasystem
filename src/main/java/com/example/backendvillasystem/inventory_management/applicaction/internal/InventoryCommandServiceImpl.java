@@ -52,7 +52,7 @@ public class InventoryCommandServiceImpl implements InventoryCommandService {
         try {
             var updatedInventory = inventoryRepository.save(inventoryToUpdate.updateInventory(
                     command.name(), command.type(), command.unit(), command.expirationDate(), command.supplier(),
-                    command.unitCost(), command.quantity(), command.lastUpdated(), command.producerId()));
+                    command.unitCost(), command.quantity()));
             return Optional.of(updatedInventory);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating inventory item: %s".formatted(e.getMessage()));

@@ -1,7 +1,7 @@
 package com.example.backendvillasystem.inventory_management.interfaces.rest.resources;
 
 public record UpdateInventoryResource(String name, String type, String unit, String expirationDate,
-                                      String supplier, Double unitCost, int quantity, String lastUpdated, Long producerId) {
+                                      String supplier, Double unitCost, int quantity) {
     public UpdateInventoryResource {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
@@ -20,9 +20,6 @@ public record UpdateInventoryResource(String name, String type, String unit, Str
         }
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        if (producerId == null || producerId <= 0) {
-            throw new IllegalArgumentException("Producer ID cannot be null or less than 1");
         }
     }
 }

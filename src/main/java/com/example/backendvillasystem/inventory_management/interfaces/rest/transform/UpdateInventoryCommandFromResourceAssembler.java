@@ -13,9 +13,7 @@ public class UpdateInventoryCommandFromResourceAssembler {
                 resource.expirationDate(),
                 resource.supplier(),
                 resource.unitCost(),
-                resource.quantity(),
-                resource.lastUpdated(),
-                resource.producerId()
+                resource.quantity()
         );
     }
 }

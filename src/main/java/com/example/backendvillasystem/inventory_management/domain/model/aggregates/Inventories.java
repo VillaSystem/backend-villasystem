@@ -41,11 +41,6 @@ public class Inventories extends AbstractAggregateRoot<Inventories> {
     @Column(nullable = false)
     private int quantity; // renamed from 'cantidad'
 
-    @Column
-    private String lastUpdated; // renamed from 'ultimaActualizacion'
-
-    @Column(nullable = false)
-    private Long producerId; // new field for producer ID
 
     protected Inventories() {}
 
@@ -58,13 +53,10 @@ public class Inventories extends AbstractAggregateRoot<Inventories> {
         this.supplier = command.supplier();
         this.unitCost = command.unitCost();
         this.quantity = command.quantity();
-        this.lastUpdated = command.lastUpdated();
-        this.producerId = command.producerId(); // assign producer ID
     }
 
     public Inventories updateInventory(String name, String type, String unit, String expirationDate,
-                                       String supplier, Double unitCost, int quantity,
-                                       String lastUpdated, Long producerId) {
+                                       String supplier, Double unitCost, int quantity) {
         this.name = name;
         this.type = type;
         this.unit = unit;
@@ -72,8 +64,6 @@ public class Inventories extends AbstractAggregateRoot<Inventories> {
         this.supplier = supplier;
         this.unitCost = unitCost;
         this.quantity = quantity;
-        this.lastUpdated = lastUpdated;
-        this.producerId = producerId;
         return this;
     }
 

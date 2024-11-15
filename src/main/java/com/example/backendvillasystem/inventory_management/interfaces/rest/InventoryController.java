@@ -86,22 +86,9 @@ public class InventoryController {
     @GetMapping
     public ResponseEntity<?> getInventoriesWithParameters(@Parameter(name = "params", hidden = true)
                                                           @RequestParam Map<String, String> params) {
-        if (params.containsKey("producerId")) {
-            return getInventoriesByProducerId(Long.parseLong(params.get("producerId")));
-        }
-        return getAllInventories();
+       return getAllInventories();
     }
 
-    public ResponseEntity<List<InventoryResource>> getInventoriesByProducerId(@PathVariable Long producerId) {
-        var inventories = inventoryQueryService.handle(new GetInventoriesByProducerIdQuery(producerId));
-        if (inventories.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var inventoryResources = inventories.stream()
-                .map(InventoryResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(inventoryResources);
-    }
 
     @PutMapping("/{inventoryId}")
     @Operation(summary = "Update an inventory item", description = "Update an inventory item")
