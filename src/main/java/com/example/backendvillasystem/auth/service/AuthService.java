@@ -45,7 +45,7 @@ public class AuthService {
                     .body("Error: El email o DNI ya están en uso.");
         }
 
-        // Crear el usuario (cliente) a partir de los datos de la solicitud de registro
+        // Crear el usuario
         Clients newClient = new Clients(
                 registerRequest.getFirstName(),
                 registerRequest.getLastName(),
@@ -55,7 +55,7 @@ public class AuthService {
                 registerRequest.getCity(),
                 registerRequest.getDni(),
                 registerRequest.getEmail(),
-                passwordEncoder.encode(registerRequest.getPassword()), // Usar un codificador de contraseñas
+                passwordEncoder.encode(registerRequest.getPassword()),
                 registerRequest.getRole()
         );
 

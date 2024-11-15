@@ -18,7 +18,7 @@ public class RegisterRequest {
     private String dni;
     private String email;
     private String password;
-    private String role; // Puede ser "consumer" o "producer" en este caso específico
+    private String role;
 
     public RegisterRequest() {}
 
