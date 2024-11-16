@@ -14,9 +14,20 @@ import java.util.Optional;
 public class BatchQueryServiceImpl implements BatchQueryService {
     private final BatchRepository batchRepository;
 
+
     public BatchQueryServiceImpl(BatchRepository batchRepository) {
         this.batchRepository = batchRepository;
     }
+
+    /**
+     * Handles the GetBatchesByIdQuery query.
+     *
+     * @param query The get batches by id query.
+     * @return The batch item if exists.
+     * @throws IllegalArgumentException If id is null.
+     * @see GetBatchesByIdQuery
+     */
+
 
     @Override
     public Optional<Batch> handle(GetBatchesByIdQuery query) {
