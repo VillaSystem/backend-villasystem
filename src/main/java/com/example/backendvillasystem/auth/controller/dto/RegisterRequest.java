@@ -18,12 +18,12 @@ public class RegisterRequest {
     private String dni;
     private String email;
     private String password;
-    private String role;
+    private Long roleId; // Cambiado de String a Long para reflejar el ID del rol
 
     public RegisterRequest() {}
 
     public RegisterRequest(String firstName, String lastName, String phone, String address,
-                           String country, String city, String dni, String email, String password, String role) {
+                           String country, String city, String dni, String email, String password, Long roleId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -33,6 +33,6 @@ public class RegisterRequest {
         this.dni = dni;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roleId = roleId; // Cambiado para usar el ID del rol
     }
 }

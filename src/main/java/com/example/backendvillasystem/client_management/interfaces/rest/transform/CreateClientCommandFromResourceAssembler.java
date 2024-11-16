@@ -4,7 +4,6 @@ import com.example.backendvillasystem.client_management.domain.model.commands.Cr
 import com.example.backendvillasystem.client_management.interfaces.rest.resources.CreateClientResource;
 
 public class CreateClientCommandFromResourceAssembler {
-
     public static CreateClientCommand toCommandFromResource(CreateClientResource resource) {
         return new CreateClientCommand(
                 resource.firstName(),
@@ -16,7 +15,7 @@ public class CreateClientCommandFromResourceAssembler {
                 resource.dni(),
                 resource.email(),
                 resource.password(),
-                resource.role()
+                resource.roleId()
         );
     }
 }

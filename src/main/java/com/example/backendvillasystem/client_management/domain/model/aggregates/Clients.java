@@ -11,14 +11,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * Clients Aggregate Root
  *
  * @summary
- * The Clients class is an aggregate root that represents new clients.
- * It is responsible for handling the CreateClient command.
+ * Represents clients in the system and handles the CreateClientCommand.
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter // Añadir Setter para poder modificar datos si es necesario
+@Setter
 public class Clients extends AbstractAggregateRoot<Clients> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,28 +50,31 @@ public class Clients extends AbstractAggregateRoot<Clients> {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
+    // Relación con Roles
+    @ManyToOne(fetch = FetchType.EAGER) // EAGER para cargar siempre el rol
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Roles role;
 
+    // Constructor vacío requerido por JPA
     protected Clients() {}
 
-    // Constructor para manejar el comando de creación
-    public Clients(CreateClientCommand command) {
-        this.firstName = command.firstName();
-        this.lastName = command.lastName();
-        this.phone = command.phone();
-        this.address = command.address();
-        this.country = command.country();
-        this.city = command.city();
-        this.dni = command.dni();
-        this.email = command.email();
-        this.password = command.password();
-        this.role = command.role();
+    // Constructor para manejar CreateClientCommand
+    public Clients(CreateClientCommand command, Roles role) {
+        this.firstName = command.getFirstName();
+        this.lastName = command.getLastName();
+        this.phone = command.getPhone();
+        this.address = command.getAddress();
+        this.country = command.getCountry();
+        this.city = command.getCity();
+        this.dni = command.getDni();
+        this.email = command.getEmail();
+        this.password = command.getPassword();
+        this.role = role;
     }
 
-    // Constructor adicional para el registro
+    // Constructor para registro
     public Clients(String firstName, String lastName, String phone, String address,
-                   String country, String city, String dni, String email, String password, String role) {
+                   String country, String city, String dni, String email, String password, Roles role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;

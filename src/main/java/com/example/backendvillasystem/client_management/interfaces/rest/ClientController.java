@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,13 +53,6 @@ public class ClientController {
             @ApiResponse(responseCode = "201", description = "Client created"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
     })
-    @PostMapping
-    public ResponseEntity<ClientResource> createClient(@RequestBody CreateClientResource resource) {
-        Optional<Clients> client = clientCommandService
-                .handle(CreateClientCommandFromResourceAssembler.toCommandFromResource(resource));
-        return client.map(c -> new ResponseEntity<>(ClientResourceFromEntityAssembler.toResourceFromEntity(c), CREATED))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
-    }
 
     private ResponseEntity<List<ClientResource>> getAllClients() {
         var clients = clientQueryService.getAllClients();

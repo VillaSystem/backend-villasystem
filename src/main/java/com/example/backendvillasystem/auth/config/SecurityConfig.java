@@ -40,12 +40,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Deshabilitamos CSRF ya que estamos utilizando tokens y no sesiones.
                 .csrf(AbstractHttpConfigurer::disable)
+
+                // Configuración de sesiones para que el servidor no las mantenga.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Configuración de acceso a las rutas.
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/swagger-ui/**", "/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
+
+                // Agregamos el filtro JWT antes del filtro de autenticación por usuario y contraseña.
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

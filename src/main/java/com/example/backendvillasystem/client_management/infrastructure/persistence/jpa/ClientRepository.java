@@ -1,6 +1,7 @@
 package com.example.backendvillasystem.client_management.infrastructure.persistence.jpa;
 
 import com.example.backendvillasystem.client_management.domain.model.aggregates.Clients;
+import com.example.backendvillasystem.client_management.domain.model.aggregates.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,6 @@ public interface ClientRepository extends JpaRepository<Clients, Long> {
      */
     boolean existsByEmailOrDni(String email, String dni);
 
-    List<Clients> findByRole(String role);
+    List<Clients> findByRole_Name(String name);
     Optional<Clients> findByEmail(String email);
 }

@@ -49,6 +49,6 @@ public class ClientQueryServiceImpl implements ClientQueryService {
      */
     @Override
     public List<Clients> handle(GetClientsByRoleQuery query) {
-        return clientRepository.findByRole(query.role());
+        return clientRepository.findByRole_Name(query.role());
     }
 }

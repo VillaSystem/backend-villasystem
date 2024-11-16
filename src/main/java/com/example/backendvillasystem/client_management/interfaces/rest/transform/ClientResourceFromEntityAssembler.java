@@ -16,8 +16,7 @@ public class ClientResourceFromEntityAssembler {
                 entity.getDni(),
                 entity.getEmail(),
                 entity.getPassword(),
-                entity.getRole()
-
+                entity.getRole().getName()
         );
     }
 }

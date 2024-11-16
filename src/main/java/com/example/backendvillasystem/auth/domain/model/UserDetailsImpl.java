@@ -18,7 +18,10 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + client.getRole().toUpperCase()));
+        // Usamos el nombre del rol desde la entidad Roles
+        return Collections.singletonList(
+                new SimpleGrantedAuthority("ROLE_" + client.getRole().getName().toUpperCase())
+        );
     }
 
     @Override
@@ -53,5 +56,9 @@ public class UserDetailsImpl implements UserDetails {
 
     public Long getId() {
         return client.getId();
+    }
+
+    public String getRoleName() {
+        return client.getRole().getName();
     }
 }

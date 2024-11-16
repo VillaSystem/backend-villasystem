@@ -10,7 +10,7 @@ public record CreateClientResource(
         String dni,
         String email,
         String password,
-        String role
+        Long roleId // Cambiar el campo role a roleId de tipo Long
 ) {
     public CreateClientResource {
         if (firstName == null || firstName.isBlank()) {
@@ -40,8 +40,8 @@ public record CreateClientResource(
         if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-        if (role == null || role.isBlank()) {
-            throw new IllegalArgumentException("Role cannot be null or empty");
+        if (roleId == null || (roleId != 1 && roleId != 2)) {
+            throw new IllegalArgumentException("Role must be either 1 (Producer) or 2 (Consumer)");
         }
     }
 }
