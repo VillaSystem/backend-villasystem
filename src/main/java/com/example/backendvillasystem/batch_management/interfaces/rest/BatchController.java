@@ -2,14 +2,17 @@ package com.example.backendvillasystem.batch_management.interfaces.rest;
 
 
 import com.example.backendvillasystem.batch_management.domain.model.aggregates.Batch;
+import com.example.backendvillasystem.batch_management.domain.model.commands.DeleteBatchCommand;
 import com.example.backendvillasystem.batch_management.domain.model.queries.GetBatchesByIdQuery;
 import com.example.backendvillasystem.batch_management.domain.model.queries.GetBatchesByProducerIdQuery;
 import com.example.backendvillasystem.batch_management.domain.services.BatchCommandService;
 import com.example.backendvillasystem.batch_management.domain.services.BatchQueryService;
 import com.example.backendvillasystem.batch_management.interfaces.rest.resources.BatchResource;
 import com.example.backendvillasystem.batch_management.interfaces.rest.resources.CreateBatchResource;
+import com.example.backendvillasystem.batch_management.interfaces.rest.resources.UpdateBatchResource;
 import com.example.backendvillasystem.batch_management.interfaces.rest.transform.BatchResourceFromEntityAssembler;
 import com.example.backendvillasystem.batch_management.interfaces.rest.transform.CreateBatchCommandFromResourceAssembler;
+import com.example.backendvillasystem.batch_management.interfaces.rest.transform.UpdateBatchCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,12 +27,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/batch", produces = APPLICATION_JSON_VALUE)
-@Tag(name = "Batch", description = "Operations related to batch")
+@RequestMapping(value = "/api/v1/batches", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "Batches", description = "Operations related to batches")
 public class BatchController {
 
     private final BatchQueryService batchQueryService;
@@ -102,4 +106,34 @@ public class BatchController {
                 .toList();
         return ResponseEntity.ok(batchResources);
     }
+
+    @PutMapping("/{batchId}")
+    @Operation(summary = "Update batch item", description = "Update a specific batch item by its unique ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Batch item updated"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<BatchResource> updateBatch(@PathVariable Long batchId, @RequestBody UpdateBatchResource resource) {
+        var updateBatchCommand = UpdateBatchCommandFromResourceAssembler.toCommandFromResource(batchId, resource);
+        var updatedBatch = batchCommandService.handle(updateBatchCommand);
+        if (updatedBatch.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var updatedBatchEntity = updatedBatch.get();
+        var updatedBatchResource = BatchResourceFromEntityAssembler.toResourceFromEntity(updatedBatchEntity);
+        return ResponseEntity.ok(updatedBatchResource);
+    }
+
+    @DeleteMapping("/{batchId}")
+    @Operation(summary = "Delete batch item", description = "Delete a specific batch item by its unique ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Batch item deleted"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<?> deleteBatch(@PathVariable Long batchId) {
+        var deleteBatchCommand = new DeleteBatchCommand(batchId);
+        batchCommandService.handle(deleteBatchCommand);
+        return ResponseEntity.ok("Batch item deleted");
+    }
 }
+
