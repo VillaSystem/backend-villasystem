@@ -13,9 +13,7 @@ public class CreateInventoryCommandFromResourceAssembler {
                 resource.expirationDate(),
                 resource.supplier(),
                 resource.unitCost(),
-                resource.quantity(),
-                resource.lastUpdated(),
-                resource.producerId() // New field for producer ID
+                resource.quantity() // New field for producer ID
         );
     }
 }

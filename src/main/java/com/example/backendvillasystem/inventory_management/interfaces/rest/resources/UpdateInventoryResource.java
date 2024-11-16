@@ -1,15 +1,8 @@
 package com.example.backendvillasystem.inventory_management.interfaces.rest.resources;
 
-public record CreateInventoryResource(
-        String name,
-        String type,
-        String unit,
-        String expirationDate,
-        String supplier,
-        Double unitCost,
-        int quantity
-) {
-    public CreateInventoryResource {
+public record UpdateInventoryResource(String name, String type, String unit, String expirationDate,
+                                      String supplier, Double unitCost, int quantity) {
+    public UpdateInventoryResource {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -23,13 +16,10 @@ public record CreateInventoryResource(
             throw new IllegalArgumentException("Supplier cannot be null or empty");
         }
         if (unitCost == null || unitCost <= 0) {
-            throw new IllegalArgumentException("UnitCost must be greater than 0");
+            throw new IllegalArgumentException("Unit cost cannot be null or less than or equal to 0");
         }
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        if (expirationDate == null || expirationDate.isBlank()) {
-            throw new IllegalArgumentException("Expiration date cannot be null or empty");
         }
     }
 }

@@ -41,15 +41,4 @@ public class InventoryQueryServiceImpl implements InventoryQueryService {
         return inventoryRepository.findAll();
     }
 
-    /**
-     * Handles the GetInventoriesByProducerIdQuery query.
-     *
-     * @param query The get inventories by producer id query.
-     * @return List of inventories for the given producer.
-     * @see GetInventoriesByProducerIdQuery
-     */
-    @Override
-    public List<Inventories> handle(GetInventoriesByProducerIdQuery query) {
-        return inventoryRepository.findByProducerId(query.producerId()); // Este método debe existir en el repositorio
-    }
 }

@@ -8,9 +8,7 @@ public record InventoryResource(
         String expirationDate,
         String supplier,
         Double unitCost,
-        int quantity,
-        String lastUpdated,
-        Long producerId
+        int quantity
 ) {
 
 }
