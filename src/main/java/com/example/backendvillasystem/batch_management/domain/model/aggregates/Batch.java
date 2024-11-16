@@ -51,4 +51,16 @@ public class Batch extends AbstractAggregateRoot<Batch> {
         this.processStatus = command.processStatus();
         this.producerId = command.producerId();
     }
+
+    public Batch updateBatch(String batchNumber, String grape, String starDate, String litersQuantity, String ph, String temperature, String processStatus, String producerId) {
+        this.batchNumber = batchNumber;
+        this.grape = grape;
+        this.starDate = starDate;
+        this.litersQuantity = litersQuantity;
+        this.ph = ph;
+        this.temperature = temperature;
+        this.processStatus = processStatus;
+        this.producerId = producerId;
+        return this;
+    }
 }
