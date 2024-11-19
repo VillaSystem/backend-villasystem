@@ -6,6 +6,7 @@ import com.example.backendvillasystem.batch_management.interfaces.rest.resources
 public class BatchResourceFromEntityAssembler {
     public static BatchResource toResourceFromEntity(Batch entity){
         return new BatchResource(
+                entity.getId(),
                 entity.getBatchNumber(),
                 entity.getGrape(),
                 entity.getStarDate(),
