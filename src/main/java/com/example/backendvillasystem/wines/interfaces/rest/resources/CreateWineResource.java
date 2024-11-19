@@ -1,6 +1,6 @@
-package com.example.backendvillasystem.wines.domain.model.commands;
+package com.example.backendvillasystem.wines.interfaces.rest.resources;
 
-public record CreateWineCommand(
+public record CreateWineResource(
         String name,
         String description,
         String type,
@@ -14,9 +14,9 @@ public record CreateWineCommand(
         String state,
         String producerId,
         String batchId,
-        String link
+        String link // Incluido link como atributo obligatorio
 ) {
-    public CreateWineCommand {
+    public CreateWineResource {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -32,20 +32,11 @@ public record CreateWineCommand(
         if (country == null || country.isBlank()) {
             throw new IllegalArgumentException("Country cannot be null or empty");
         }
-        if ( year < 0) {
-            throw new IllegalArgumentException("Year must be a positive integer");
-        }
         if (grapes == null || grapes.isBlank()) {
             throw new IllegalArgumentException("Grapes cannot be null or empty");
         }
-        if (alcohol == null || alcohol < 0) {
-            throw new IllegalArgumentException("Alcohol percentage cannot be negative");
-        }
-        if (rating != null && (rating < 0 || rating > 100)) {
-            throw new IllegalArgumentException("Rating must be between 0 and 100");
-        }
-        if (state == null || state.isBlank()) {
-            throw new IllegalArgumentException("State cannot be null or empty");
+        if (alcohol == null || alcohol <= 0) {
+            throw new IllegalArgumentException("Alcohol content must be greater than 0");
         }
         if (producerId == null || producerId.isBlank()) {
             throw new IllegalArgumentException("Producer ID cannot be null or empty");
@@ -53,8 +44,8 @@ public record CreateWineCommand(
         if (batchId == null || batchId.isBlank()) {
             throw new IllegalArgumentException("Batch ID cannot be null or empty");
         }
-        if (link == null || link.isBlank()) {
-            throw new IllegalArgumentException("Link must be a valid URL");
+        if (link == null || link.isBlank()) { // Validación para link
+            throw new IllegalArgumentException("Link cannot be null or empty");
         }
     }
 }

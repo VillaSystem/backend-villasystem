@@ -2,19 +2,42 @@ package com.example.backendvillasystem.wines.domain.services;
 
 import com.example.backendvillasystem.wines.domain.model.aggregates.Wines;
 import com.example.backendvillasystem.wines.domain.model.commands.CreateWineCommand;
-import com.example.backendvillasystem.wines.infrastructure.persistence.jpa.WineRepository;
-import org.springframework.stereotype.Service;
+import com.example.backendvillasystem.wines.domain.model.commands.DeleteWineCommand;
+import com.example.backendvillasystem.wines.domain.model.commands.UpdateWineCommand;
 
-@Service
-public class WineCommandService {
-    private final WineRepository wineRepository;
+import java.util.Optional;
 
-    public WineCommandService(WineRepository wineRepository) {
-        this.wineRepository = wineRepository;
-    }
+/**
+ * @name WineCommandService
+ * @summary
+ * This interface represents the service that handles the wine-related commands.
+ */
+public interface WineCommandService {
+    /**
+     * Handle the create wine command.
+     * @param command The create wine command.
+     * @return The created wine item.
+     *
+     * @throws IllegalArgumentException If WineApiKey is null or empty.
+     * @see CreateWineCommand
+     */
+    Optional<Wines> handle(CreateWineCommand command);
 
-    public Wines createWine(CreateWineCommand command) {
-        Wines wine = new Wines(command);
-        return wineRepository.save(wine);
-    }
+    /**
+     * Handle the update wine command.
+     * @param command The update wine command.
+     * @return The updated wine item.
+     *
+     * @throws IllegalArgumentException If WineApiKey is null or empty.
+     * @see UpdateWineCommand
+     */
+    Optional<Wines> handle(UpdateWineCommand command);
+
+    /**
+     * Handle the delete wine command.
+     * @param command The delete wine command.
+     * @throws IllegalArgumentException If WineApiKey is null or empty.
+     * @see DeleteWineCommand
+     */
+    void handle(DeleteWineCommand command);
 }
