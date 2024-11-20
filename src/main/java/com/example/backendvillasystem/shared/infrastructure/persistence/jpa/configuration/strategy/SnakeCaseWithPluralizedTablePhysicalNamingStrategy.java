@@ -1,4 +1,4 @@
-package com.example.backendvillasystem.shared.infraestructure.persistence.jpa.strategy;
+package com.example.backendvillasystem.shared.infrastructure.persistence.jpa.configuration.strategy;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
@@ -7,16 +7,16 @@ import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 import static io.github.encryptorcode.pluralize.Pluralize.pluralize;
 
 /**
- * SnakeCase Physical Naming Strategy
+ * Snake Case With Pluralized Table Physical Naming Strategy
  * @summary
- * This class is used to convert the table names and columns names to snake case
- * It also pluralizes the table names
- * It implements the PhysicalNamingStrategy interface from Hibernate
+ * PhysicalNamingStrategy implementation that converts entity names to snake_case and table names to pluralized snake_case.
+ *
+ * @since 1.0.0
  */
-public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
+public class SnakeCaseWithPluralizedTablePhysicalNamingStrategy implements PhysicalNamingStrategy {
     @Override
     public Identifier toPhysicalCatalogName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return this.toSnakeCase(identifier);
+        return null;
     }
 
     @Override
@@ -40,9 +40,9 @@ public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
     }
 
     /**
-     * Convert the Identifier to Snake Case
-     * @param identifier object identifier
-     * @return Snake Case Identifier
+     * Convert identifier to snake case
+     * @param identifier Identifier
+     * @return Identifier
      */
     private Identifier toSnakeCase(final Identifier identifier) {
         if (identifier == null) {
@@ -57,12 +57,12 @@ public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
     }
 
     /**
-     * Pluralize the Identifier
-     * @param identifier object identifier
-     * @return Pluralized Identifier
+     * Convert identifier to plural
+     * @param identifier Identifier
+     * @return Identifier
      */
-    private Identifier toPlural(final Identifier identifier){
-        final String name = pluralize(identifier.getText());
-        return Identifier.toIdentifier(name);
+    private Identifier toPlural(final Identifier identifier) {
+        final String newName = pluralize(identifier.getText());
+        return Identifier.toIdentifier(newName);
     }
 }
