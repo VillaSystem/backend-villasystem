@@ -1,6 +1,6 @@
 package com.example.backendvillasystem.orders_management.interfaces.rest.resources;
 
-public record CreateOrderResource(
+public record UpdateOrderResource(
         String orderNumber,
         String product,
         String transportationCondition,
@@ -11,7 +11,7 @@ public record CreateOrderResource(
         String type,
         String status
 ) {
-    public CreateOrderResource {
+    public UpdateOrderResource {
         if (orderNumber == null || orderNumber.isBlank()) {
             throw new IllegalArgumentException("Order number cannot be null or empty");
         }

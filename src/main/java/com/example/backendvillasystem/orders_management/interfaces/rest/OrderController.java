@@ -1,30 +1,35 @@
 package com.example.backendvillasystem.orders_management.interfaces.rest;
 
-import com.example.backendvillasystem.orders_management.domain.model.aggregates.Order;
+import com.example.backendvillasystem.orders_management.domain.model.aggregates.Orders;
+import com.example.backendvillasystem.orders_management.domain.model.commands.CreateOrderCommand;
 import com.example.backendvillasystem.orders_management.domain.model.commands.UpdateOrderCommand;
+import com.example.backendvillasystem.orders_management.domain.model.commands.DeleteOrderCommand;
 import com.example.backendvillasystem.orders_management.domain.model.queries.GetOrderByIdQuery;
-import com.example.backendvillasystem.orders_management.domain.model.queries.GetOrdersByEstadoQuery;
 import com.example.backendvillasystem.orders_management.domain.services.OrderCommandService;
 import com.example.backendvillasystem.orders_management.domain.services.OrderQueryService;
-import com.example.backendvillasystem.orders_management.interfaces.rest.dto.OrderDto;
+import com.example.backendvillasystem.orders_management.interfaces.rest.resources.OrderResource;
 import com.example.backendvillasystem.orders_management.interfaces.rest.resources.CreateOrderResource;
-import com.example.backendvillasystem.orders_management.interfaces.rest.transform.CreateOrderCommandFromResourceAssembler;
+import com.example.backendvillasystem.orders_management.interfaces.rest.resources.UpdateOrderResource;
 import com.example.backendvillasystem.orders_management.interfaces.rest.transform.OrderResourceFromEntityAssembler;
+import com.example.backendvillasystem.orders_management.interfaces.rest.transform.CreateOrderCommandFromResourceAssembler;
+import com.example.backendvillasystem.orders_management.interfaces.rest.transform.UpdateOrderCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/orders", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/orders", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Orders", description = "Operations related to orders")
 public class OrderController {
 
@@ -36,7 +41,6 @@ public class OrderController {
         this.orderCommandService = orderCommandService;
     }
 
-    // Endpoint para crear una nueva orden
     @Operation(
             summary = "Create an order",
             description = "Create an order with the provided details"
@@ -46,91 +50,70 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "Bad Request"),
     })
     @PostMapping
-    public ResponseEntity<OrderDto> createOrder(@RequestBody CreateOrderResource resource) {
-        CreateOrderCommandFromResourceAssembler assembler = new CreateOrderCommandFromResourceAssembler();
-        Order createdOrder = orderCommandService.createOrder(assembler.toCommand(resource));
-
-        // Convertir entidad a DTO usando el ensamblador
-        OrderResourceFromEntityAssembler orderResourceAssembler = new OrderResourceFromEntityAssembler();
-        return new ResponseEntity<>(orderResourceAssembler.toResource(createdOrder), CREATED);
+    public ResponseEntity<OrderResource> createOrder(@RequestBody CreateOrderResource resource) {
+        Optional<Orders> orderItem = orderCommandService
+                .handle(CreateOrderCommandFromResourceAssembler.toCommandFromResource(resource));
+        return orderItem.map(i -> new ResponseEntity<>(OrderResourceFromEntityAssembler.toResourceFromEntity(i), CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    // Endpoint para obtener todas las órdenes
-    @Operation(
-            summary = "Get all orders",
-            description = "Get all orders in the system"
-    )
-    @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-        List<Order> orders = orderQueryService.getAllOrders();
+    private ResponseEntity<List<OrderResource>> getAllOrders() {
+        var orders = orderQueryService.getAllOrders();
         if (orders.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        // Usar ensamblador para convertir cada Order a OrderDto
-        OrderResourceFromEntityAssembler assembler = new OrderResourceFromEntityAssembler();
-        List<OrderDto> orderResources = orders.stream().map(assembler::toResource).toList();
+        var orderResources = orders.stream()
+                .map(OrderResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
         return ResponseEntity.ok(orderResources);
     }
 
-    // Endpoint para obtener una orden por ID
     @Operation(
             summary = "Get order by ID",
-            description = "Get an order by its ID"
+            description = "Retrieve a specific order by its unique ID"
     )
-    @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable Long orderId) {
-        GetOrderByIdQuery query = new GetOrderByIdQuery(orderId);
-        Order order = orderQueryService.getOrderById(query);
-
-        // Convertir a DTO usando ensamblador
-        OrderResourceFromEntityAssembler assembler = new OrderResourceFromEntityAssembler();
-        return new ResponseEntity<>(assembler.toResource(order), HttpStatus.OK);
+    @GetMapping("{id}")
+    public ResponseEntity<OrderResource> getOrderById(@PathVariable Long id) {
+        Optional<Orders> orderItem = orderQueryService.handle(new GetOrderByIdQuery(id));
+        return orderItem.map(i -> ResponseEntity.ok(OrderResourceFromEntityAssembler.toResourceFromEntity(i)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Endpoint para listar órdenes por estado
     @Operation(
-            summary = "Get orders by status",
-            description = "Get all orders with the specified status"
+            summary = "Get orders with parameters",
+            description = "Retrieve orders with optional query parameters"
     )
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<OrderDto>> getOrdersByEstado(@PathVariable String estado) {
-        GetOrdersByEstadoQuery query = new GetOrdersByEstadoQuery(estado);
-        List<Order> orders = orderQueryService.getOrdersByEstado(query);
-
-        if (orders.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Usar ensamblador para convertir las órdenes a DTO
-        OrderResourceFromEntityAssembler assembler = new OrderResourceFromEntityAssembler();
-        List<OrderDto> orderResources = orders.stream().map(assembler::toResource).toList();
-        return ResponseEntity.ok(orderResources);
+    @GetMapping
+    public ResponseEntity<?> getOrdersWithParameters(@Parameter(name = "params", hidden = true)
+                                                     @RequestParam Map<String, String> params) {
+        return getAllOrders();
     }
 
-    // Endpoint para actualizar el estado de una orden
-    @Operation(
-            summary = "Update order status",
-            description = "Update the status of an order"
-    )
-    @PatchMapping("/{orderId}")
-    public ResponseEntity<OrderDto> updateOrderStatus(@PathVariable Long orderId, @RequestBody UpdateOrderCommand command) {
-        command = new UpdateOrderCommand(orderId, command.getNewStatus());
-        Order order = orderCommandService.updateOrderStatus(command);
-
-        // Convertir a DTO usando ensamblador
-        OrderResourceFromEntityAssembler assembler = new OrderResourceFromEntityAssembler();
-        return new ResponseEntity<>(assembler.toResource(order), HttpStatus.OK);
+    @PutMapping("/{orderId}")
+    @Operation(summary = "Update an order", description = "Update an order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order updated"),
+            @ApiResponse(responseCode = "404", description = "Order not found")
+    })
+    public ResponseEntity<OrderResource> updateOrder(@PathVariable Long orderId,
+                                                     @RequestBody UpdateOrderResource resource) {
+        var updateOrderCommand = UpdateOrderCommandFromResourceAssembler.toCommandFromResource(orderId, resource);
+        var updatedOrder = orderCommandService.handle(updateOrderCommand);
+        if (updatedOrder.isEmpty()) return ResponseEntity.notFound().build();
+        var updatedOrderEntity = updatedOrder.get();
+        var updatedOrderResource = OrderResourceFromEntityAssembler.toResourceFromEntity(updatedOrderEntity);
+        return ResponseEntity.ok(updatedOrderResource);
     }
 
-    // Endpoint para eliminar una orden
-    @Operation(
-            summary = "Delete order",
-            description = "Delete an order by its ID"
-    )
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
-        orderCommandService.deleteOrder(orderId);
-        return ResponseEntity.noContent().build();
+    @Operation(summary = "Delete an order", description = "Delete an order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order deleted"),
+            @ApiResponse(responseCode = "404", description = "Order not found")
+    })
+    public ResponseEntity<?> deleteOrder(@PathVariable Long orderId) {
+        var deleteOrderCommand = new DeleteOrderCommand(orderId);
+        orderCommandService.handle(deleteOrderCommand);
+        return ResponseEntity.ok("Order deleted");
     }
 }
