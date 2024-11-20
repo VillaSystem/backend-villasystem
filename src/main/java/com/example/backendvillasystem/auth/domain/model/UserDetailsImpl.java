@@ -58,5 +58,36 @@ public class UserDetailsImpl implements UserDetails {
         return client.getId();
     }
 
-    public String getRoleName() { return client.getRole(); }
+    public String getRoleName() {
+        return client.getRole();
+    }
+
+    // Métodos adicionales para obtener datos completos del cliente
+    public String getFirstName() {
+        return client.getFirstName();
+    }
+
+    public String getLastName() {
+        return client.getLastName();
+    }
+
+    public String getPhone() {
+        return client.getPhone();
+    }
+
+    public String getAddress() {
+        return client.getAddress();
+    }
+
+    public String getCountry() {
+        return client.getCountry();
+    }
+
+    public String getCity() {
+        return client.getCity();
+    }
+
+    public String getDni() {
+        return client.getDni();
+    }
 }
