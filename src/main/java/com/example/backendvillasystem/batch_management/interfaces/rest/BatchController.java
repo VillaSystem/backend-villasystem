@@ -91,9 +91,7 @@ public class BatchController {
     @GetMapping
     public ResponseEntity<?> getAllBatchWithParameters(@Parameter(name= "params", hidden = true)
                                                        @RequestParam Map<String, String> params) {
-        if (params.containsKey("producerId")) {
-            return getBatchByProducerId(Long.parseLong(params.get("producerId")));
-        }
+
         return getAllBatches();
     }
     public ResponseEntity<List<BatchResource>> getBatchByProducerId(@PathVariable Long producerId) {
