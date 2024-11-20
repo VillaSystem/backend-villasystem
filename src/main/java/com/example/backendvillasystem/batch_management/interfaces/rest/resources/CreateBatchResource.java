@@ -35,7 +35,5 @@ public record CreateBatchResource(
         if (producerId == null || producerId.isBlank()) {
             throw new IllegalArgumentException("producerId cannot be null or empty");
         }
-
-
     }
 }
